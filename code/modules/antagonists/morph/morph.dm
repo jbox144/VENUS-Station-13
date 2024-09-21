@@ -219,7 +219,7 @@
 	name = "Spawn Morph"
 	typepath = /datum/round_event/ghost_role/morph
 	weight = 0 //Admin only
-	max_occurrences = 1
+	max_occurrences = 0
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a hungry shapeshifting blobby creature."
 
