@@ -63,6 +63,7 @@
 					to_chat(user, "<B>Your wish is granted, but at a cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, warping your body to match the greed in your heart.")
 					new /obj/structure/closet/crate/trashcart/moneywish(loc)
+					new /obj/structure/closet/crate/trashcart/moneywish(loc)
 					user.set_species(/datum/species/golem/gold)
 					charges--
 					insisting = FALSE
@@ -127,7 +128,6 @@
 	desc = "A heavy, metal trashcart with wheels. Filled with cash."
 	name = "loaded trash cart"
 
-/obj/structure/closet/crate/trashcart/moneywish/PopulateContents()	//25*20*1000=500,000
+/obj/structure/closet/crate/trashcart/moneywish/PopulateContents()
 	for(var/i in 1 to 25)
-		var/obj/item/stack/spacecash/c1000/lodsamoney = new /obj/item/stack/spacecash/c1000(src)
-		lodsamoney.amount = lodsamoney.max_amount
+		var/obj/item/stack/spacecash/c1000/lodsamoney = new /obj/item/stack/spacecash/c10000(src)
