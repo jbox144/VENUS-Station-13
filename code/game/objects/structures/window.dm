@@ -776,7 +776,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		/obj/structure/window/reinforced/fulltile,
 		/obj/structure/window/reinforced/tinted/fulltile,
 		/obj/structure/window/plasma/fulltile,
-		/obj/structure/window/plasma/reinforced/fulltile
+		/obj/structure/window/plasma/reinforced/fulltile,
+		/obj/structure/window/reinforced/fulltile/indestructable
 		)
 	level = 3
 	glass_amount = 2
