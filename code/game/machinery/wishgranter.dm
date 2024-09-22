@@ -63,7 +63,6 @@
 					to_chat(user, "<B>Your wish is granted, but at a cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, warping your body to match the greed in your heart.")
 					new /obj/structure/closet/crate/trashcart/moneywish(loc)
-					new /obj/structure/closet/crate/trashcart/moneywish(loc)
 					user.set_species(/datum/species/golem/gold)
 					charges--
 					insisting = FALSE
