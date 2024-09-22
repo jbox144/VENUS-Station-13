@@ -130,4 +130,4 @@
 
 /obj/structure/closet/crate/trashcart/moneywish/PopulateContents()
 	for(var/i in 1 to 25)
-		var/obj/item/stack/spacecash/c1000/lodsamoney = new /obj/item/stack/spacecash/c10000(src)
+		new /obj/item/stack/spacecash/c10000(src)

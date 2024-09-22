@@ -2,9 +2,8 @@
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
-	icon_state = "explorer-normal"
-	item_state = "explorer-normal"
-	var/suit_type = "normal"
+	icon_state = "explorer_normal"
+	item_state = "explorer_normal"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -19,10 +18,8 @@
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
-	icon_state = "explorer-normal"
-	item_state = "explorer-normal"
-	var/suit_type = "normal"
-	var/basestate = "normal"
+	icon_state = "explorer_normal"
+	item_state = "explorer_normal"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -45,10 +42,12 @@
 
 	if(amount)
 		name = "reinforced [initial(name)]"
-		suit_type = "normal_goliath"
+		icon_state = "explorer_normal_goliath"
 		if(amount == maxamount)
-			suit_type = "normal_goliath_full"
-	icon_state = "explorer-[suit_type]"
+			icon_state = "explorer_normal_goliath_full"
+	else
+		name = initial(name)
+		icon_state = initial(icon_state)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.wear_suit == src)
@@ -64,10 +63,12 @@
 
 	if(amount)
 		name = "reinforced [initial(name)]"
-		suit_type = "normal_goliath"
+		icon_state = "explorer_normal_goliath"
 		if(amount == maxamount)
-			suit_type = "normal_goliath_full"
-	icon_state = "explorer-[suit_type]"
+			icon_state = "explorer_normal_goliath_full"
+	else
+		name = initial(name)
+		icon_state = initial(icon_state)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.head == src)
