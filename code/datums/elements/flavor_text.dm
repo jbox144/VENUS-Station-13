@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 // New proc to handle headshot flavor text specifically (In manage-flavour-texts while in-game)
 /mob/proc/handle_headshot_flavor(datum/element/flavor_text/F)
 	var/old_headshot = F.texts_by_atom[src]
-	var/new_headshot = input(src, "Input the image link: (For Discord links, try putting the file's type at the end of the link, after the '&'. For example: '&.jpg/.png/.jpeg')", "Headshot Image", old_headshot) as text|null
+	var/new_headshot = input(src, "Input the image link: (We recommend using Catbox.moe or Gyazo, or other (possibly) NSFW image hosting sites, as Discord auto-deletes image links regularly.)", "Headshot Image", old_headshot) as text|null
 	if(isnull(new_headshot))
 		return
 	if(!new_headshot)
@@ -172,11 +172,19 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 
 	// Validate the headshot URL
-	var/static/link_regex = regex("https://i\\.gyazo\\.com|https://media\\.discordapp\\.net|https://cdn\\.discordapp\\.com|https://media\\.discordapp\\.net$|https://static1\\.e621\\.net")
-	var/static/end_regex = regex("\\.jpg|\\.png|\\.jpeg$")
+	var/static/link_regex = regex("^(https?|ftp):\\/\\/\[^\\s\\/$.?#].\[^\\s]*$") //Do not touch the damn duplicates.
+	var/static/end_regex = regex(".jpg|.jpg|.png|.jpeg|.jpeg") //Regex is terrible, don't touch the duplicate extensions
 
 	if(!findtext(new_headshot, link_regex))
-		to_chat(src, span_warning("The link needs to be an unshortened Gyazo, E621, or Discordapp link!"))
+		to_chat(usr, span_warning("You need a valid link!"))
+		return
+	// Discord will auto-delete images often, meaning users will see their headshot show up, think all is fine, but three days later their link will be broken.
+	if(findtext(new_headshot, "discordapp"))
+		to_chat(usr, span_adminsay("You cannot use Discord images, as they are auto-deleted regularly! Try Catbox.moe or Gyazo instead!"))
+		return
+	// Whilst Imgur does not ban SFW images, many SFW images that look questionable will be nuked.
+	if(findtext(new_headshot, "imgur"))
+		to_chat(usr, span_adminsay("You cannot use Imgur images, as they regularly delete NSFW images as well as many borderline SFW too! Try Catbox.moe or Gyazo instead!"))
 		return
 	if(!findtext(new_headshot, end_regex))
 		to_chat(src, span_warning("You need either \".png\", \".jpg\", or \".jpeg\" in the link!"))

@@ -4019,7 +4019,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 				//SPLURT edit
 				if("headshot")
-					var/usr_input = input(user, "Input the image link: (For Discord links, try putting the file's type at the end of the link, after the '&'. for example '&.jpg/.png/.jpeg')", "Headshot Image", features["headshot_link"]) as text|null
+					var/usr_input = input(user, "Input the image link: (We recommend using Catbox.moe or Gyazo, or other (possibly) NSFW image hosting sites, as Discord auto-deletes image links regularly.)", "Headshot Image", features["headshot_link"]) as text|null
 					if(isnull(usr_input))
 						return
 					if(!usr_input)
@@ -4031,6 +4031,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					if(!findtext(usr_input, link_regex))
 						to_chat(usr, span_warning("You need a valid link!"))
+						return
+					// Discord will auto-delete images often, meaning users will see their headshot show up, think all is fine, but three days later their link will be broken.
+					if(findtext(usr_input, "discordapp"))
+						to_chat(usr, span_adminsay("You cannot use Discord images, as they are auto-deleted regularly! Try Catbox.moe or Gyazo instead!"))
+						return
+					// Whilst Imgur does not ban SFW images, many SFW images that look questionable will be nuked.
+					if(findtext(usr_input, "imgur"))
+						to_chat(usr, span_adminsay("You cannot use Imgur images, as they regularly delete NSFW images as well as many borderline SFW too! Try Catbox.moe or Gyazo instead!"))
 						return
 					if(!findtext(usr_input, end_regex, -8))
 						to_chat(usr, span_warning("You need either \".png\", \".jpg\", or \".jpeg\" in the link!"))
