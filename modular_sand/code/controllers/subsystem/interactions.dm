@@ -19,7 +19,8 @@ SUBSYSTEM_DEF(interactions)
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/sloth,
 		/mob/living/simple_animal/pickle,
-		/mob/living/simple_animal/hostile/retaliate/goat
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/mob/living/carbon/monkey
 	)
 	VAR_PROTECTED/initialized_blacklist
 
