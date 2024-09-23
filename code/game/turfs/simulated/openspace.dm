@@ -19,6 +19,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	icon_state = "invisible"
 	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
+	allow_z_travel = TRUE
 	baseturfs = /turf/open/openspace
 	intact = FALSE //this means wires go on top
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -70,6 +71,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return FALSE
 
 /turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	//Check if our fall location has gravity
+	if(!A.has_gravity(destination))
+		return FALSE
 	if(A.anchored)
 		return FALSE
 	if(direction == DOWN)
@@ -153,6 +157,15 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
+
+//Returns FALSE if gravity is force disabled. True if grav is possible
+/turf/open/openspace/check_gravity()
+	var/turf/T = below()
+	if(!T)
+		return TRUE
+	if(isspaceturf(T))
+		return FALSE
+	return TRUE
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

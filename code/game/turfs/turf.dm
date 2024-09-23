@@ -20,6 +20,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
+	//If true, turf will allow users to float up and down in 0 grav.
+	var/allow_z_travel = FALSE
+
 	var/blocks_air = FALSE
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
@@ -139,8 +142,73 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	vis_contents.Cut()
 
-/turf/on_attack_hand(mob/user)
+/turf/attack_hand(mob/user)
+	// Show a zmove radial when clicked
+	if(get_turf(user) == src)
+		if(!user.has_gravity(src) || (user.movement_type & (FLOATING|FLYING)))
+			show_zmove_radial(user)
+			return
+		else if(allow_z_travel)
+			to_chat(user, "<span class='warning'>You can't float up and down when there is gravity!</span>")
+	. = ..()
 	user.Move_Pulled(src)
+
+/// Shows a radial with up and down arrows that forward to zMove()
+/turf/proc/show_zmove_radial(mob/user)
+	if(get_turf(user) != src)
+		return
+	var/list/tool_list = list()
+	var/turf/above = above()
+	if(above)
+		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	var/turf/below = below()
+	if(below)
+		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+
+	if(!length(tool_list))
+		return
+
+	var/result = show_radial_menu(user, user, tool_list, require_near = TRUE, tooltips = TRUE)
+	if(get_turf(user) != src)
+		return
+	switch(result)
+		if("Cancel")
+			return
+		if("Up")
+			if(user.zMove(UP, TRUE))
+				to_chat(user, "<span class='notice'>You move upwards.</span>")
+		if("Down")
+			if(user.zMove(DOWN, TRUE))
+				to_chat(user, "<span class='notice'>You move down.</span>")
+
+/// Moves a mob, any buckled mobs, and pulled mobs between Zs
+/turf/proc/travel_z(mob/user, turf/target, dir)
+	var/mob/living/L = user
+	if(istype(L) && L.incorporeal_move) // Allow most jaunting
+		user.client?.Process_Incorpmove(dir)
+		return
+	var/atom/movable/AM
+	if(user.pulling)
+		AM = user.pulling
+		AM.forceMove(target)
+	if(user.pulledby) // We moved our way out of the pull
+		user.pulledby.stop_pulling()
+	if(user.has_buckled_mobs())
+		for(var/M in user.buckled_mobs)
+			var/mob/living/buckled_mob = M
+			var/old_dir = buckled_mob.dir
+			if(!buckled_mob.Move(target, dir))
+				user.doMove(buckled_mob.loc) //forceMove breaks buckles, use doMove
+				user.last_move = buckled_mob.last_move
+				user.last_move_time = world.time
+				// Otherwise they will always face north
+				buckled_mob.setDir(old_dir)
+				user.setDir(old_dir)
+				return FALSE
+	else
+		user.forceMove(target)
+	if(istype(AM) && user.Adjacent(AM))
+		user.start_pulling(AM)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
@@ -194,8 +262,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE
 	A.zfalling = TRUE
+	var/atom/movable/pulling = A.pulling
 	A.forceMove(target)
 	A.zfalling = FALSE
+	if(pulling)
+		//Things you are pulling fall with you
+		pulling.zfalling = TRUE
+		pulling.forceMove(target)
+		A.start_pulling(pulling)
+		pulling.zfalling = FALSE
+		target.zImpact(pulling, levels, src)
 	target.zImpact(A, levels, src)
 	return TRUE
 
@@ -645,3 +721,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
 			continue
 		. += turf_to_check
+
+/turf/proc/check_gravity()
+	return TRUE
