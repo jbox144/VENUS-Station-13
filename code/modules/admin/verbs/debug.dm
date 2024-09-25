@@ -690,7 +690,7 @@
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+	var/ruinname = tgui_input_list(src, "Select ruin", "Jump to Ruin", names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
