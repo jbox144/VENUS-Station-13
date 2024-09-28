@@ -1,30 +1,10 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker
 	name = "navigation computer"
-	desc = "Used to designate a precise transit location for a spacecraft."
+	desc = ""
 	jump_action = null
 	should_supress_view_changes = FALSE
 
-	var/shuttleId = ""
-	var/shuttlePortId = ""
-	var/shuttlePortName = "custom location"
-	/// Hashset of ports to jump to and ignore for collision purposes
-	var/list/jump_to_ports = list()
-	/// The custom docking port placed by this console
-	var/obj/docking_port/stationary/my_port
-	/// The mobile docking port of the connected shuttle
-	var/obj/docking_port/mobile/shuttle_port
-	// Traits forbided for custom docking
-	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY, ZTRAIT_REEBE) //traits forbided for custom docking
-	var/view_range = 0
-	var/x_offset = 0
-	var/y_offset = 0
-	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/open/openspace)
-	var/space_turfs_only = TRUE
-	var/see_hidden = FALSE
-	var/designate_time = 0
-	var/turf/designating_target_loc
-	var/jammed = FALSE
-
+/*
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	actions += new /datum/action/innate/shuttledocker_rotate(src)
@@ -382,14 +362,15 @@
 	if(isnull(selected))
 		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return
-	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
-		return
-	playsound(src, "terminal_type", 25, FALSE)
-	var/turf/T = get_turf(L[selected])
-	if(isnull(T))
-		return
-	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
-	remote_eye.setLoc(T)
-	to_chat(owner, span_notice("Jumped to [selected]."))
-	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash/static)
-	owner.clear_fullscreen("flash", 3)
+	playsound(src, "terminal_type", 25, 0)
+	if(selected)
+		var/turf/T = get_turf(L[selected])
+		if(T)
+			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+			remote_eye.setLoc(T)
+			to_chat(target, "<span class='notice'>Jumped to [selected]</span>")
+			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/tiled/flash/static)
+			C.clear_fullscreen("flash", 3)
+	else
+		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+*/

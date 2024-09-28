@@ -47,6 +47,7 @@
 #define ROLE_GHOSTCAFE				"ghostcafe"
 #define ROLE_MINOR_ANTAG			"minorantag"
 #define ROLE_RESPAWN				"respawnsystem"
+#define ROLE_SURVIVALIST			"survivalist"
 //Define for disabling individual antagonists for dynamic
 #define HAS_ANTAG_PREF(C,ROLE) (!(NO_ANTAG & C.prefs.toggles) && (ROLE in C.prefs.be_special))
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.

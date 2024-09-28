@@ -1,0 +1,106 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/effect/abstract/open_area_marker,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered)
+"h" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"l" = (
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+"t" = (
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+"C" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "gateshutter";
+	name = "Gateway Access Shutter"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered)
+"G" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+"L" = (
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+"M" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered)
+"S" = (
+/obj/machinery/gateway,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+"V" = (
+/turf/open/floor/plasteel,
+/area/ruin/unpowered)
+"Y" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(2,1,1) = {"
+h
+t
+l
+L
+G
+M
+C
+V
+V
+"}
+(3,1,1) = {"
+h
+Y
+S
+l
+G
+M
+C
+V
+d
+"}
+(4,1,1) = {"
+h
+L
+l
+t
+G
+M
+C
+V
+V
+"}
+(5,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}

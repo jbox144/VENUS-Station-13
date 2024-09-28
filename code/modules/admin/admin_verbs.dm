@@ -214,7 +214,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	// /client/proc/check_timer_sources,
 	/client/proc/toggle_cdn,
 	/client/proc/discordnulls,
-	/client/proc/generate_wikichem_list //DO NOT PRESS UNLESS YOU WANT SUPERLAG
+	/client/proc/generate_wikichem_list, //DO NOT PRESS UNLESS YOU WANT SUPERLAG
+	/client/proc/generate_ruin // VENUS
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -296,7 +297,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_combo_hud,
 	/client/proc/debug_huds,
 	/client/proc/cmd_admin_man_up, //CIT CHANGE - adds man up verb
-	/client/proc/cmd_admin_man_up_global //CIT CHANGE - ditto
+	/client/proc/cmd_admin_man_up_global, //CIT CHANGE - ditto
+	/client/proc/generate_ruin // VENUS
 	))
 GLOBAL_PROTECT(admin_verbs_hideable)
 

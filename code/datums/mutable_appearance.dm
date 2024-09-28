@@ -7,7 +7,7 @@
 /mutable_appearance
 	var/category // listen i want to store some meta information on mutable appearances don't judge me
 
-/mutable_appearance/New()
+/mutable_appearance/proc/New()
 	..()
 	plane = FLOAT_PLANE // No clue why this is 0 by default yet images are on FLOAT_PLANE
 						// And yes this does have to be in the constructor, BYOND ignores it if you set it as a normal var

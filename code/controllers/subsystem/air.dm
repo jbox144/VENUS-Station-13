@@ -69,6 +69,8 @@ SUBSYSTEM_DEF(air)
 	// Target for excited_group_pressure_goal; can go below this, if it determines the thread is taking too long.
 	var/excited_group_pressure_goal_target = 1
 
+	var/list/paused_z_levels
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "HP:[round(cost_highpressure,1)]|"
